@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>HCMBoK aplicado à Embrapa Mandioca e Fruticultura — Dossiê de Gestão de Mudanças</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,500;0,600;0,700;0,800;0,900;1,600&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F2F4EC;
+  --paper-2:#E8ECDF;
+  --ink:#1C2620;
+  --ink-soft:#4B564C;
+  --forest:#1F5C3F;
+  --forest-dark:#123625;
+  --terracotta:#B35A2E;
+  --gold:#C4941F;
+  --teal:#2E7C86;
+  --plum:#6E4C74;
+  --risk-red:#B23B3B;
+  --line:#D3D8C6;
+  --card:#FFFFFF;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Inter',sans-serif;
+  font-size:15.5px;
+  line-height:1.6;
+}
+::selection{background:var(--gold);color:var(--forest-dark);}
+
+/* ---------- LAYOUT ---------- */
+.shell{display:grid;grid-template-columns:290px 1fr;min-height:100vh;}
+@media (max-width:980px){.shell{grid-template-columns:1fr;}.sidebar{position:relative;height:auto;}}
+
+.sidebar{
+  position:sticky; top:0; height:100vh; overflow-y:auto;
+  background:var(--forest-dark);
+  color:#EAF2EC;
+  padding:34px 26px 40px;
+  border-right:6px solid var(--terracotta);
+}
+.sidebar .brand{
+  font-family:'Archivo',sans-serif; font-weight:900; font-size:1.05rem;
+  letter-spacing:.02em; color:#fff; margin-bottom:2px;
+}
+.sidebar .brand small{
+  display:block; font-family:'IBM Plex Mono',monospace; font-weight:400;
+  font-size:.68rem; letter-spacing:.12em; color:var(--gold); margin-top:6px;
+  text-transform:uppercase;
+}
+.sidebar .meta{
+  margin-top:18px; padding-top:16px; border-top:1px solid rgba(255,255,255,.15);
+  font-size:.78rem; color:#B9CBBE; line-height:1.7;
+}
+.sidebar nav{margin-top:26px;}
+.sidebar nav a{
+  display:flex; gap:10px; align-items:baseline;
+  color:#CFE0D5; text-decoration:none; font-size:.86rem;
+  padding:8px 8px; border-radius:6px; margin-bottom:2px;
+  transition:background .15s ease, color .15s ease;
+}
+.sidebar nav a:hover{background:rgba(255,255,255,.08); color:#fff;}
+.sidebar nav a .num{
+  font-family:'IBM Plex Mono',monospace; color:var(--gold); font-size:.72rem; min-width:26px;
+}
+.sidebar .foot{
+  margin-top:28px; padding-top:16px; border-top:1px solid rgba(255,255,255,.15);
+  font-size:.72rem; color:#8FA79A;
+}
+
+.main{padding:0;}
+
+/* ---------- HERO ---------- */
+.hero{
+  background:
+    radial-gradient(1100px 420px at 85% -10%, rgba(196,148,31,.18), transparent 60%),
+    linear-gradient(160deg, var(--forest) 0%, var(--forest-dark) 78%);
+  color:#fff; padding:64px 56px 52px; position:relative; overflow:hidden;
+}
+.hero::after{
+  content:""; position:absolute; right:-60px; bottom:-90px; width:340px; height:340px;
+  border:2px solid rgba(255,255,255,.12); border-radius:50%;
+}
+.hero::before{
+  content:""; position:absolute; right:40px; bottom:-40px; width:220px; height:220px;
+  border:2px solid rgba(255,255,255,.08); border-radius:50%;
+}
+.hero .eyebrow{
+  font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:.16em;
+  font-size:.74rem; color:var(--gold); font-weight:600;
+}
+.hero h1{
+  font-family:'Archivo',sans-serif; font-weight:900; font-size:2.5rem; line-height:1.08;
+  margin:14px 0 12px; max-width:760px;
+}
+.hero p.lead{max-width:640px; color:#DCEAE1; font-size:1.02rem;}
+.hero .tags{display:flex; flex-wrap:wrap; gap:10px; margin-top:24px;}
+.hero .tag{
+  font-family:'IBM Plex Mono',monospace; font-size:.72rem; letter-spacing:.03em;
+  background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.25);
+  padding:6px 12px; border-radius:20px; color:#fff;
+}
+.hero-grid{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:32px;
+}
+.hero-stat{
+  background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.16);
+  border-radius:10px; padding:14px 16px;
+}
+.hero-stat .n{font-family:'Archivo',sans-serif; font-weight:800; font-size:1.5rem; color:#fff;}
+.hero-stat .l{font-size:.72rem; color:#BFDACB; margin-top:2px;}
+@media (max-width:820px){.hero{padding:44px 24px;} .hero-grid{grid-template-columns:repeat(2,1fr);}}
+
+/* ---------- SECTIONS ---------- */
+section{padding:52px 56px; border-bottom:1px solid var(--line);}
+@media (max-width:820px){section{padding:34px 22px;}}
+section:nth-of-type(even){background:var(--paper-2);}
+
+.sec-head{display:flex; align-items:flex-start; gap:18px; margin-bottom:26px;}
+.sec-num{
+  font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:.82rem;
+  color:#fff; background:var(--forest); border-radius:8px; padding:6px 11px;
+  white-space:nowrap; margin-top:4px;
+}
+.sec-head h2{
+  font-family:'Archivo',sans-serif; font-weight:800; font-size:1.55rem; margin:0;
+  color:var(--forest-dark); line-height:1.2;
+}
+.sec-head .sub{color:var(--ink-soft); font-size:.9rem; margin-top:4px;}
+
+p{margin:0 0 14px;}
+h3.h{
+  font-family:'Archivo',sans-serif; font-weight:700; font-size:1.08rem; color:var(--forest-dark);
+  margin:28px 0 12px; padding-top:6px;
+}
+h3.h .chip{
+  display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:.68rem;
+  background:var(--forest); color:#fff; padding:3px 8px; border-radius:5px; margin-right:8px;
+  vertical-align:middle; font-weight:600;
+}
+
+/* ---------- CARDS (protocolo motif) ---------- */
+.protocol-card{
+  background:var(--card); border:1px solid var(--line); border-left:6px solid var(--forest);
+  border-radius:8px; padding:18px 20px; margin-bottom:16px;
+  box-shadow:0 1px 2px rgba(28,38,32,.04);
+}
+.protocol-card .pc-head{
+  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;
+  margin-bottom:8px;
+}
+.protocol-card .pc-code{
+  font-family:'IBM Plex Mono',monospace; font-size:.72rem; letter-spacing:.05em;
+  color:var(--forest); font-weight:700; text-transform:uppercase;
+}
+.protocol-card h4{
+  font-family:'Archivo',sans-serif; font-size:1.02rem; margin:0; color:var(--ink);
+}
+.protocol-card .desc{font-size:.86rem; color:var(--ink-soft); font-style:italic; margin-bottom:10px;}
+.protocol-card .cnpmf-tag{
+  font-family:'IBM Plex Mono',monospace; font-size:.65rem; background:var(--gold); color:#2b2205;
+  padding:2px 8px; border-radius:12px; font-weight:700; letter-spacing:.02em;
+}
+.pc-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:10px;}
+@media (max-width:760px){.pc-grid{grid-template-columns:1fr;}}
+.pc-block .lbl{
+  font-family:'IBM Plex Mono',monospace; font-size:.68rem; text-transform:uppercase;
+  letter-spacing:.08em; color:var(--terracotta); font-weight:700; margin-bottom:5px; display:block;
+}
+
+/* culture card variants by color */
+.protocol-card.c1{border-left-color:var(--forest);}
+.protocol-card.c2{border-left-color:var(--terracotta);}
+.protocol-card.c3{border-left-color:var(--gold);}
+.protocol-card.c4{border-left-color:var(--teal);}
+.protocol-card.c5{border-left-color:var(--plum);}
+
+/* ---------- TABLES ---------- */
+.tbl-wrap{overflow-x:auto; border-radius:10px; border:1px solid var(--line); background:var(--card);}
+table{border-collapse:collapse; width:100%; font-size:.85rem;}
+thead th{
+  background:var(--forest-dark); color:#fff; text-align:left; padding:10px 12px;
+  font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:.72rem;
+  text-transform:uppercase; letter-spacing:.04em; white-space:nowrap;
+}
+tbody td{padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top;}
+tbody tr:nth-child(even){background:#F8F9F3;}
+tbody tr:hover{background:#EFF3E4;}
+td.center,th.center{text-align:center;}
+
+/* badges for severity / profile / responses */
+.badge{display:inline-block; padding:3px 9px; border-radius:20px; font-size:.72rem; font-weight:700; font-family:'IBM Plex Mono',monospace;}
+.badge.alta{background:#FBE1DC; color:var(--risk-red);}
+.badge.media{background:#FCEFCB; color:#8A6A0A;}
+.badge.baixa{background:#DEF0E4; color:var(--forest-dark);}
+.badge.decisor{background:#E4E9F5; color:#3B4E8A;}
+.badge.direto{background:#DDEEEF; color:var(--teal);}
+.badge.indireto{background:#EFE3EF; color:var(--plum);}
+.badge.espectador{background:#F1EFE6; color:#7A6E44;}
+.badge.vendedor{background:#DEF0E4; color:var(--forest-dark);}
+.badge.suporte{background:#DEEBF0; color:var(--teal);}
+.badge.instavel{background:#FCEFCB; color:#8A6A0A;}
+.badge.resistente{background:#FBE1DC; color:var(--risk-red);}
+.badge.aberto{background:#F7D3CD; color:#8C2A17;}
+.badge.velado{background:#EAD1D1; color:#6E1F1F;}
+
+.raci-chip{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:26px; height:26px; border-radius:6px; font-family:'IBM Plex Mono',monospace;
+  font-weight:700; font-size:.78rem; color:#fff;
+}
+.raci-R{background:var(--forest);}
+.raci-A{background:var(--terracotta);}
+.raci-C{background:var(--teal);}
+.raci-I{background:#9CA79E;}
+
+/* ---------- TIMELINE (fases HCMBoK) ---------- */
+.phase-rail{display:grid; grid-template-columns:repeat(6,1fr); gap:10px; margin:22px 0 8px;}
+@media (max-width:900px){.phase-rail{grid-template-columns:repeat(2,1fr);}}
+.phase{
+  border-radius:10px; padding:14px 14px 16px; color:#fff; position:relative; min-height:150px;
+  display:flex; flex-direction:column; justify-content:space-between;
+}
+.phase .pn{font-family:'IBM Plex Mono',monospace; font-size:.68rem; opacity:.85;}
+.phase h5{font-family:'Archivo',sans-serif; font-size:.98rem; margin:6px 0 8px; line-height:1.15;}
+.phase ul{margin:0; padding-left:16px; font-size:.72rem; opacity:.95; line-height:1.5;}
+.phase.p1{background:var(--forest);}
+.phase.p2{background:var(--teal);}
+.phase.p3{background:var(--gold); color:#2b2205;}
+.phase.p4{background:var(--terracotta);}
+.phase.p5{background:var(--plum);}
+.phase.p6{background:var(--forest-dark);}
+
+/* ---------- RISK MATRIX ---------- */
+.risk-matrix{display:grid; grid-template-columns:90px repeat(3,1fr); grid-template-rows:auto repeat(3,90px); gap:6px; max-width:640px; margin-top:18px;}
+.risk-matrix .axis-y{writing-mode:vertical-rl; transform:rotate(180deg); text-align:center; font-family:'IBM Plex Mono',monospace; font-size:.72rem; grid-row:2/5; display:flex; align-items:center; justify-content:center; color:var(--ink-soft); font-weight:600;}
+.risk-matrix .axis-x{grid-column:2/5; text-align:center; font-family:'IBM Plex Mono',monospace; font-size:.72rem; color:var(--ink-soft); font-weight:600; padding-bottom:4px;}
+.risk-matrix .hd{font-family:'IBM Plex Mono',monospace; font-size:.68rem; text-align:center; color:var(--ink-soft); align-self:end; padding-bottom:4px;}
+.risk-cell{border-radius:8px; display:flex; flex-wrap:wrap; align-content:flex-start; gap:5px; padding:8px; font-family:'IBM Plex Mono',monospace; font-size:.76rem; font-weight:700; color:#2b2205;}
+.risk-cell span{background:rgba(255,255,255,.55); border-radius:5px; padding:2px 6px;}
+.r-low{background:#DDEFCE;}
+.r-mid{background:#F7E2A3;}
+.r-high{background:#F3B7A6;}
+
+/* ---------- CALLOUT ---------- */
+.callout{
+  border-radius:10px; padding:18px 20px; margin:18px 0; border:1px solid var(--line);
+  background:#FBF6E7; border-left:6px solid var(--gold);
+}
+.callout.green{background:#EAF3EC; border-left-color:var(--forest);}
+.callout.teal{background:#E7F1F2; border-left-color:var(--teal);}
+.callout .k{font-family:'IBM Plex Mono',monospace; font-size:.7rem; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-soft); font-weight:700; display:block; margin-bottom:6px;}
+
+/* ---------- FOOTER ---------- */
+footer{
+  background:var(--forest-dark); color:#B9CBBE; padding:38px 56px; font-size:.82rem;
+}
+footer strong{color:#fff;}
+
+/* small helpers */
+.two-col{display:grid; grid-template-columns:1fr 1fr; gap:22px;}
+@media (max-width:820px){.two-col{grid-template-columns:1fr;}}
+.legend-row{display:flex; flex-wrap:wrap; gap:10px; margin:10px 0 20px;}
+.legend-item{font-size:.76rem; display:flex; align-items:center; gap:6px;}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<aside class="sidebar">
+  <div class="brand">HCMBoK · CNPMF<small>Dossiê de Gestão de Mudanças</small></div>
+  <div class="meta">
+    Aplicação da metodologia HCMBoK® (Human Change Management Body of Knowledge) à<br>
+    <strong style="color:#fff">Embrapa Mandioca e Fruticultura</strong> — Cruz das Almas, BA<br>
+    Referência: Plano Estratégico de Gestão de Mudanças, Projeto Focus (Embrapa Sede, 2017)
+  </div>
+  <nav>
+    <a href="#s1"><span class="num">01</span> Sumário executivo</a>
+    <a href="#s2"><span class="num">02</span> A metodologia HCMBoK</a>
+    <a href="#s3"><span class="num">03</span> Contexto da Unidade</a>
+    <a href="#s4"><span class="num">04</span> Mapa de stakeholders</a>
+    <a href="#s5"><span class="num">05</span> Cultura organizacional</a>
+    <a href="#s6"><span class="num">06</span> Impactos organizacionais</a>
+    <a href="#s7"><span class="num">07</span> Prontidão para a mudança</a>
+    <a href="#s8"><span class="num">08</span> Riscos da mudança</a>
+    <a href="#s9"><span class="num">09</span> Papéis e responsabilidades (RACI)</a>
+    <a href="#s10"><span class="num">10</span> Plano de comunicação</a>
+    <a href="#s11"><span class="num">11</span> Plano de treinamento</a>
+    <a href="#s12"><span class="num">12</span> Cronograma e ciclo de vida</a>
+    <a href="#s13"><span class="num">13</span> Produtos por fase</a>
+    <a href="#s14"><span class="num">14</span> Recomendações finais</a>
+  </nav>
+  <div class="foot">Documento consultivo — uso interno do Comitê de Gestão de Mudanças da Unidade.<br>Elaborado com base no padrão HCMBoK e nos artefatos corporativos de Gestão de Mudanças da Embrapa.</div>
+</aside>
+
+<main class="main">
+
+  <div class="hero">
+    <div class="eyebrow">Consultoria em Gestão de Mudanças Organizacionais</div>
+    <h1>Aplicando o HCMBoK na Embrapa Mandioca e Fruticultura</h1>
+    <p class="lead">Dossiê técnico-gerencial que adapta o Plano Estratégico de Gestão de Mudanças do Projeto Focus (Embrapa Sede) e os artefatos oficiais do HCMBoK® — mapa de stakeholders, avaliação de cultura organizacional, avaliação de impactos, matriz RACI, plano de comunicação e plano de ação — à realidade específica da Unidade Descentralizada de Cruz das Almas, Bahia.</p>
+    <div class="tags">
+      <span class="tag">HCMBoK® — Human Change Management</span>
+      <span class="tag">Unidade: CNPMF · Cruz das Almas/BA</span>
+      <span class="tag">Base: Projeto Focus (2017)</span>
+      <span class="tag">6 fases · 13 artefatos</span>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="n">6</div><div class="l">Fases do ciclo de vida HCMBoK</div></div>
+      <div class="hero-stat"><div class="n">10</div><div class="l">Elementos de cultura organizacional</div></div>
+      <div class="hero-stat"><div class="n">14</div><div class="l">Grupos de stakeholders mapeados</div></div>
+      <div class="hero-stat"><div class="n">10</div><div class="l">Riscos críticos identificados</div></div>
+    </div>
+  </div>
+
+  <!-- 01 SUMÁRIO EXECUTIVO -->
+  <section id="s1">
+    <div class="sec-head">
+      <div class="sec-num">01</div>
+      <div><h2>Sumário executivo</h2><div class="sub">Por que aplicar o HCMBoK na Unidade e o que este dossiê entrega</div></div>
+    </div>
+    <p>A Embrapa Mandioca e Fruticultura (CNPMF), sediada em Cruz das Almas (BA), guarda bancos de germoplasma de mandioca e fruticultura relevantes para o Brasil e o Mundo, sustenta programas de melhoramento genético em mandioca e fruticultura tropical e mantém cooperação técnica internacional. Como toda Unidade Descentralizada da Embrapa, a CNPMF está sujeita às mesmas dinâmicas culturais mapeadas no <strong>Plano Estratégico de Gestão de Mudanças do Projeto Focus</strong> — crenças arraigadas sobre a autossuficiência da pesquisa, baixa maturidade em gestão profissional, e um corpo técnico historicamente estável — mas soma particularidades próprias de uma unidade de pesquisa de porte médio, no interior do país, fortemente vinculada a duas cadeias produtivas (mandioca e fruticultura) que competem internamente por prioridade e recursos.</p>
+    <p>Este dossiê aplica integralmente a metodologia <strong>HCMBoK® (Human Change Management Body of Knowledge)</strong> — a mesma adotada pelo Projeto Focus — para estruturar a governança de qualquer iniciativa de mudança na Unidade (adoção de novo modelo de gestão por metas de impacto, reestruturação de núcleos, novos sistemas corporativos, etc.). Cobre os seis processos centrais do método: <em>mapeamento de stakeholders, avaliação da cultura organizacional, avaliação de impactos organizacionais, gestão de riscos, plano de comunicação e plano de treinamento &amp; desenvolvimento</em> — todos adaptados ao contexto real da CNPMF, com recomendações de ação específicas para o Gestor de Mudanças e para o Comitê Local.</p>
+    <div class="callout green">
+      <span class="k">Recomendação central</span>
+      Nomear um <strong>Gestor de Mudanças</strong> dedicado (ainda que em regime parcial) e um <strong>Comitê de Gestão de Mudanças</strong> local, reportando-se à estrutura de Change Management Officer (CMO) vinculada à SGI/Sede, replicando o modelo de "handover" descrito no Projeto Focus — mas com um ciclo de vida completo do HCMBoK (Iniciação, Aquisição, Execução, Implantação, Encerramento e Produção), já que a CNPMF terá tanto mudanças pontuais quanto uma agenda contínua de transformação corporativa a sustentar.
+    </div>
+  </section>
+
+  <!-- 02 METODOLOGIA -->
+  <section id="s2">
+    <div class="sec-head">
+      <div class="sec-num">02</div>
+      <div><h2>A metodologia HCMBoK</h2><div class="sub">Processos, ciclo de vida e artefatos de referência</div></div>
+    </div>
+    <p>O HCMBoK® é um corpo de conhecimento voltado à gestão do <em>fator humano</em> em projetos de mudança — complementar ao PMBoK (gestão de projetos) e não substitutivo dele. Sua premissa central, evidente no Plano Estratégico do Projeto Focus, é que toda mudança organizacional provoca desconforto, e que esse desconforto só é bem administrado quando tratado com o mesmo rigor metodológico dedicado a prazo, custo e escopo.</p>
+
+    <h3 class="h"><span class="chip">2.1</span>Ciclo de vida — seis fases</h3>
+    <p>O HCMBoK estrutura a gestão de mudanças em seis fases sequenciais, que devem correr em paralelo ao cronograma do projeto/iniciativa de mudança em si (não apenas na etapa de planejamento):</p>
+    <div class="phase-rail">
+      <div class="phase p1"><div><span class="pn">FASE 1</span><h5>Iniciação e Planejamento</h5></div><ul><li>Patrocinador</li><li>Stakeholders</li><li>Cultura organizacional</li><li>RACI &amp; ambiente</li></ul></div>
+      <div class="phase p2"><div><span class="pn">FASE 2</span><h5>Aquisição</h5></div><ul><li>Choque cultural c/ fornecedores</li><li>Treinamento técnico</li><li>Integração à cultura</li></ul></div>
+      <div class="phase p3"><div><span class="pn">FASE 3</span><h5>Execução</h5></div><ul><li>Kick-off</li><li>Impactos organizacionais</li><li>Gestão da aprendizagem</li></ul></div>
+      <div class="phase p4"><div><span class="pn">FASE 4</span><h5>Implantação</h5></div><ul><li>Prontidão dos usuários</li><li>Comprometimento das lideranças</li><li>Decisão GO/NO GO</li></ul></div>
+      <div class="phase p5"><div><span class="pn">FASE 5</span><h5>Encerramento</h5></div><ul><li>Lições aprendidas</li><li>Reconhecimento</li><li>Realocação da equipe</li></ul></div>
+      <div class="phase p6"><div><span class="pn">FASE 6</span><h5>Produção</h5></div><ul><li>Sustentação da mudança</li><li>Handover ao CMO</li><li>Comunicação contínua</li></ul></div>
+    </div>
+
+    <h3 class="h"><span class="chip">2.2</span>Artefatos centrais</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Artefato</th><th>Função no HCMBoK</th><th>Aplicação neste dossiê</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Mapa de Stakeholders</strong></td><td>Classifica atores por poder de decisão e por adesão provável à mudança</td><td>Seção 04</td></tr>
+          <tr><td><strong>Avaliação de Cultura Organizacional</strong></td><td>Identifica 10 elementos culturais e seus reflexos na mudança</td><td>Seção 05</td></tr>
+          <tr><td><strong>Avaliação de Impactos Organizacionais</strong></td><td>Mapeia impactos em competências, estrutura, poder e processos</td><td>Seção 06</td></tr>
+          <tr><td><strong>Indicadores de Prontidão</strong></td><td>Mede a curva de comprometimento (conhecimento → aceitação → entendimento → comprometimento)</td><td>Seção 07</td></tr>
+          <tr><td><strong>Matriz de Riscos (RBS)</strong></td><td>Estrutura riscos de adoção, RH, financeiros e de patrocínio</td><td>Seção 08</td></tr>
+          <tr><td><strong>Matriz RACI</strong></td><td>Define papéis: Responsável, Aprovador, Consultado, Informado</td><td>Seção 09</td></tr>
+          <tr><td><strong>Plano de Comunicação</strong></td><td>Comunicação ordinária e extraordinária por canal, frequência e público</td><td>Seção 10</td></tr>
+          <tr><td><strong>Plano de Treinamento &amp; Desenvolvimento</strong></td><td>Baseado na ISO 10015, mapeia competências e gaps</td><td>Seção 11</td></tr>
+          <tr><td><strong>Plano de Ação (5W2H)</strong></td><td>Cronograma detalhado por macro-atividade e fase</td><td>Seção 12</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 03 CONTEXTO DA UNIDADE -->
+  <section id="s3">
+    <div class="sec-head">
+      <div class="sec-num">03</div>
+      <div><h2>Contexto da Unidade</h2><div class="sub">Embrapa Mandioca e Fruticultura (CNPMF) — o que muda em relação ao Projeto Focus</div></div>
+    </div>
+    <div class="two-col">
+      <div>
+        <p><strong>Perfil.</strong> A CNPMF está localizada em Cruz das Almas (BA), com foco em pesquisa, desenvolvimento e inovação em mandioca e fruticultura tropical. Mantém núcleos técnicos (P&amp;D, Transferência de Tecnologia, Administração), programas de melhoramento genético (cultivares BRS), um dos maiores bancos de germoplasma de mandioca do mundo, laboratórios de micropropagação e criopreservação de plantas, e uma agenda ativa de capacitação (cursos técnicos, Dia de Portas Abertas, Embrapa &amp; Escola).</p>
+        <p><strong>Diferença estrutural em relação ao Focus.</strong> O Projeto Focus foi concebido no nível corporativo (Sede/SGI), com stakeholders como Diretoria Executiva e Chefes-Gerais de todas as Unidades. Na CNPMF, a mesma metodologia deve ser "descida" um nível: a Unidade passa a ser tanto <em>objeto</em> da mudança corporativa (ex.: adesão ao Integro, novas metas de impacto do PDE) quanto <em>agente local</em> de mudanças próprias (reorganização de núcleos, novos sistemas, novas parcerias internacionais).</p>
+      </div>
+      <div>
+        <p><strong>Fatores específicos a considerar:</strong></p>
+        <div class="protocol-card c1" style="margin-bottom:10px;">
+          <div class="pc-head"><span class="pc-code">Fator 01 · Geografia</span></div>
+          Unidade no interior da Bahia, distante da Sede (Brasília) e de outras Unidades correlatas — eleva custo e frequência de deslocamentos, reforçando a percepção histórica de "distância da Sede" já identificada no Focus.
+        </div>
+        <div class="protocol-card c2" style="margin-bottom:10px;">
+          <div class="pc-head"><span class="pc-code">Fator 02 · Duas cadeias</span></div>
+          Convivência de duas comunidades técnicas (mandioca e fruticultura) com agendas, redes de parceiros e prestígio histórico distintos — risco de competição interna por prioridade em qualquer processo de mudança.
+        </div>
+        <div class="protocol-card c3">
+          <div class="pc-head"><span class="pc-code">Fator 03 · Internacionalização</span></div>
+          Cooperação técnica internacional ativa cria stakeholders externos e uma narrativa de sucesso que pode tanto facilitar quanto mascarar a necessidade de mudança interna de gestão.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 STAKEHOLDERS -->
+  <section id="s4">
+    <div class="sec-head">
+      <div class="sec-num">04</div>
+      <div><h2>Mapa de stakeholders</h2><div class="sub">Adaptado do Mapa de Stakeholders (padrão HCMBoK) do Projeto Focus para o nível da Unidade</div></div>
+    </div>
+    <p>O Mapa de Stakeholders classifica cada grupo em duas dimensões: <strong>capacidade de influência</strong> (Decisor, Influenciador direto, Influenciador indireto, Espectador) e <strong>resposta estimada</strong> à mudança (Vendedor, Suporte, Instável, Provável Resistente, Boicotador Aberto, Boicotador Velado). Uso restrito à equipe de gestão de mudanças, dado seu caráter sensível.</p>
+    <div class="legend-row">
+      <span class="legend-item"><span class="badge vendedor">Vendedor</span> apoia e vende a mudança</span>
+      <span class="legend-item"><span class="badge suporte">Suporte</span> apoiará se entender o propósito</span>
+      <span class="legend-item"><span class="badge instavel">Instável</span> posição ainda não definida</span>
+      <span class="legend-item"><span class="badge resistente">Provável resistente</span> tende a resistir</span>
+      <span class="legend-item"><span class="badge aberto">Boicotador aberto</span> resiste declaradamente</span>
+      <span class="legend-item"><span class="badge velado">Boicotador velado</span> parece aderir, resiste nos bastidores</span>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Stakeholder</th><th>Perfil</th><th>Resposta estimada</th><th>Observação para a CNPMF</th></tr></thead>
+        <tbody>
+          <tr><td>01</td><td>Chefia-Geral da Unidade</td><td><span class="badge decisor">Decisor</span></td><td><span class="badge vendedor">Vendedor</span></td><td>Deve atuar como patrocinador local; condição essencial para viabilizar a mudança (regra HCMBoK: patrocinador ideal é decisor e vendedor).</td></tr>
+          <tr><td>02</td><td>Chefe-Adjunto de P&amp;D</td><td><span class="badge decisor">Decisor</span></td><td><span class="badge velado">Boicotador velado</span></td><td>Responde por toda a agenda científica; tende a concordar publicamente mas proteger o modelo atual de priorização de projetos.</td></tr>
+          <tr><td>03</td><td>Chefe-Adjunto de Transferência de Tecnologia</td><td><span class="badge decisor">Decisor</span></td><td><span class="badge suporte">Suporte</span></td><td>Tende a apoiar mudanças que ampliem alcance de tecnologias (Ater+ Mandioca, parcerias), desde que propósito seja claro.</td></tr>
+          <tr><td>04</td><td>Chefe-Adjunto de Administração</td><td><span class="badge decisor">Decisor</span></td><td><span class="badge instavel">Instável</span></td><td>Impacto direto em processos e sistemas administrativos; posição dependerá de como a mudança afeta rotinas já consolidadas.</td></tr>
+          <tr><td>05</td><td>Coordenadores de Núcleos (NTI, NAE, NCO)</td><td><span class="badge direto">Influenciador direto</span></td><td><span class="badge velado">Boicotador velado</span></td><td>Formadores de opinião intermediários; sua adesão pública tende a mascarar resistência operacional.</td></tr>
+          <tr><td>06</td><td>Pesquisadores (mandioca)</td><td><span class="badge direto">Influenciador direto</span></td><td><span class="badge aberto">Boicotador aberto</span></td><td>Grupo historicamente consolidado, com forte identidade em torno do legado de melhoramento genético; tende a expressar resistência abertamente.</td></tr>
+          <tr><td>07</td><td>Pesquisadores (fruticultura)</td><td><span class="badge direto">Influenciador direto</span></td><td><span class="badge resistente">Provável resistente</span></td><td>Historicamente com menos protagonismo institucional que a linha de mandioca; sensível a qualquer redistribuição de recursos.</td></tr>
+          <tr><td>08</td><td>Analistas, técnicos e assistentes</td><td><span class="badge indireto">Influenciador indireto</span></td><td><span class="badge resistente">Provável resistente</span></td><td>Executam grande parte das rotinas de campo e laboratório; fonte natural de candidatos a Agente de Mudanças.</td></tr>
+          <tr><td>09</td><td>SGI / SIM — Sede (CMO corporativo)</td><td><span class="badge decisor">Decisor</span></td><td><span class="badge vendedor">Vendedor</span></td><td>Referência normativa e metodológica (HCMBoK, Integro); parceiro natural do Gestor de Mudanças local no handover.</td></tr>
+          <tr><td>10</td><td>Comitê Assessor Externo (CAE) da Unidade</td><td><span class="badge indireto">Influenciador indireto</span></td><td><span class="badge suporte">Suporte</span></td><td>Legitima decisões estratégicas perante a comunidade científica externa; útil como avalista da mudança.</td></tr>
+          <tr><td>11</td><td>Parceiros internacionais (ex.: cooperação com outros países, ICTs, universidades)</td><td><span class="badge espectador">Espectador</span></td><td><span class="badge suporte">Suporte</span></td><td>Sentirão efeitos indiretos de qualquer reorganização de equipe/processos; comunicação deve ser mantida.</td></tr>
+          <tr><td>12</td><td>Produtores rurais e extensionistas (Ater+ Mandioca)</td><td><span class="badge espectador">Espectador</span></td><td><span class="badge instavel">Instável</span></td><td>Público final da tecnologia gerada; qualquer mudança que afete continuidade de atendimento deve ser comunicada com antecedência.</td></tr>
+          <tr><td>13</td><td>SINPAF (representação sindical local)</td><td><span class="badge espectador">Espectador</span></td><td><span class="badge instavel">Instável</span></td><td>Historicamente instável no início de projetos de mudança em toda a Embrapa (padrão observado no Focus).</td></tr>
+          <tr><td>14</td><td>Fornecedores e prestadores de serviços laboratoriais</td><td><span class="badge espectador">Espectador</span></td><td><span class="badge suporte">Suporte</span></td><td>Tendência de apoio condicionado à manutenção de contratos e rotinas de fornecimento.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout teal">
+      <span class="k">Nota metodológica HCMBoK</span>
+      Na dúvida sobre a resposta estimada de um stakeholder, o padrão recomenda classificá-lo como <strong>Instável</strong> — e não presumir apoio. O mapa deve ser revisado periodicamente pela equipe de gestão, nunca compartilhado amplamente, e cruzado com a Avaliação de Impactos (seção 06) e com a Matriz RACI (seção 09).
+    </div>
+  </section>
+
+  <!-- 05 CULTURA ORGANIZACIONAL -->
+  <section id="s5">
+    <div class="sec-head">
+      <div class="sec-num">05</div>
+      <div><h2>Avaliação da cultura organizacional e reflexos na mudança</h2><div class="sub">Os 10 elementos do template HCMBoK, aplicados especificamente à CNPMF</div></div>
+    </div>
+    <p>O Projeto Focus mapeou a cultura organizacional da Embrapa como um todo, com base no HCMBoK, a partir de entrevistas com colaboradores de diversas Unidades. Abaixo, cada um dos <strong>10 elementos culturais</strong> do template oficial é detalhado com (i) sua definição metodológica, (ii) a leitura geral já feita para a Embrapa no Focus, (iii) sua manifestação específica esperada na CNPMF e (iv) o reflexo provável na mudança e a ação recomendada.</p>
+
+    <div class="protocol-card c1">
+      <div class="pc-head"><span class="pc-code">Elemento 01 · Crenças e pressupostos</span><span class="cnpmf-tag">CNPMF</span></div>
+      <h4>Crenças e pressupostos</h4>
+      <div class="desc">Percepções na maioria das vezes ocultas — o que se acredita como verdade, sem estar formalmente declarado.</div>
+      <p>No Focus, identificou-se a crença de que "a Embrapa é uma empresa de pesquisa" e que adoção de tecnologia é problema alheio, além da ideia de que cada Unidade tem sua própria cultura ("cada Embrapinha tem a sua"). Na CNPMF, essa crença se manifesta de forma acentuada: o reconhecimento histórico como referência em mandioca e fruticultura reforça o pressuposto de que "resultados técnicos comprovam competência de gestão" — dispensando, na visão de parte do corpo técnico, qualquer reforma no modelo de gestão da Unidade.</p>
+      <div class="pc-grid">
+        <div class="pc-block"><span class="lbl">Reflexo na mudança</span>Subestimação da necessidade de gestão de mudanças; resistência passiva a novas metas de impacto e a modelos de priorização corporativos (ex. Integro, VI/VII PDE).</div>
+        <div class="pc-block"><span class="lbl">Ação recomendada</span>Comunicar a mudança associando-a explicitamente ao fortalecimento do legado técnico, nunca como questionamento da competência científica já reconhecida — replicar a fórmula do patrocinador do Focus: "empoderar, não substituir".</div>
+      </div>
+    </div>
+
+    <div class="protocol-card c2">
+      <div class="pc-head"><span class="pc-code">Elemento 02 · Valores</span><span class="cnpmf-tag">CNPMF</span></div>
+      <h4>Valores</h4>
+      <div class="desc">Declaração formal do que a empresa prega (ex. VI PDE: comprometimento, equidade, excelência, flexibilidade, cooperação, ética, responsabilidade socioambiental, transparência) — nem sempre correspondente à prática.</div>
+      <p>O Focus já apontava que cooperação e flexibilidade são os valores mais problemáticos na prática institucional. Na CNPMF, essa lacuna tende a se concentrar na relação entre os núcleos de mandioca e de fruticultura, que historicamente disputam orçamento, vagas e prestígio — um desafio de cooperação interna adicional que não existia no nível corporativo do Focus.</p>
+      <div class="pc-grid">
+        <div class="pc-block"><span class="lbl">Reflexo na mudança</span>Risco de segregação de agendas entre as duas linhas de pesquisa durante a priorização de metas de impacto e alocação de recursos da mudança.</div>
+        <div class="pc-block"><span class="lbl">Ação recomendada</span>Conduzir workshops conjuntos de priorização (ex. metodologia AHP) reunindo lideranças de mandioca e fruticultura desde o início, para que a cooperação seja um valor exercitado, não apenas declarado.</div>
+      </div>
+    </div>
+
+    <div class="protocol-card c3">
+      <div class="pc-head"><span class="pc-code">Elemento 03 · Mitos</span><span class="cnpmf-tag">CNPMF</span></div>
+      <h4>Mitos</h4>
+      <div class="desc">O que se conta da história da empresa, real ou não — muitas vezes uma interpretação distorcida da realidade ao longo do tempo.</div>
+      <p>No Focus, um mito recorrente era o de que bastaria manter o pesquisador livre para gerar inovação, dispensando gestão profissional. Na CNPMF esse mito ganha reforço concreto: a atuação internacional (missões técnicas internacionais) e o reconhecimento do banco de germoplasma alimentam a narrativa de que "a Unidade já é internacionalmente relevante e não precisa mudar sua forma de se gerir" — confundindo excelência técnica pontual com maturidade de gestão.</p>
+      <div class="pc-grid">
+        <div class="pc-block"><span class="lbl">Reflexo na mudança</span>Complacência: a comunidade interna interpreta o reconhecimento externo como prova de que "aqui já muda por si", reduzindo a percepção de urgência da mudança.</div>
+        <div class="pc-block"><span class="lbl">Ação recomendada</span>Apresentar diagnóstico objetivo de prontidão (seção 07) que evidencie, com dados, os gaps de gestão mesmo diante do reconhecimento técnico — desfazendo o mito com evidência, não com discurso.</div>
+      </div>
+    </div>
+
+    <div class="protocol-card c4">
+      <div class="pc-head"><span class="pc-code">Elemento 04 · Linguagem e símbolos de comunicação</span><span class="cnpmf-tag">CNPMF</span></div>
+      <h4>Linguagem e símbolos de comunicação</h4>
+      <div class="desc">Todos os elementos que comunicam algo: canais, logos, slogans, mas também símbolos de poder e destaque (mobiliário, tamanho de sala, cores).</div>
+      <p>O Focus identificou o "rádio-corredor" como canal informal dominante e os canais oficiais (e-mail e telefone) como pouco explorados. Na CNPMF, a Unidade já opera canais próprios e altamente especializados — a plataforma <em>Ater+ Mandioca</em>, o site institucional, boletins meteorológicos e redes sociais da Unidade — que falam a língua técnica de produtores e extensionistas, mas não necessariamente a linguagem de gestão corporativa da Sede.</p>
+      <div class="pc-grid">
+        <div class="pc-block"><span class="lbl">Reflexo na mudança</span>Mensagens corporativas genéricas (Sede) tendem a não "colar" localmente se não traduzidas para o vocabulário técnico já consolidado na Unidade.</div>
+        <div class="pc-block"><span class="lbl">Ação recomendada</span>Adaptar o Plano de Comunicação (seção 10) para usar os canais e o vocabulário já legitimados na CNPMF — Ater+ Mandioca, boletins técnicos, eventos de campo — como veículo prioritário da comunicação de mudanças.</div>
+      </div>
+    </div>
+
+    <div class="protocol-card c5">
+      <div class="pc-head"><span class="pc-code">Elemento 05 · Cerimônias e rituais</span><span class="cnpmf-tag">CNPMF</span></div>
+      <h4>Cerimônias e rituais</h4>
+      <div class="desc">Eventos praticados regularmente que tornam a cultura mais visível, ratificando valores ou fortalecendo mitos e crenças.</div>
+      <p>O Focus listou reuniões de diretoria sem retorno claro à base e comemorações voltadas ao passado como rituais típicos da Embrapa. A CNPMF possui um calendário de rituais mais concreto e voltado ao público externo: o <em>Dia de Portas Abertas</em> (já em sua 33ª edição), cursos técnicos regulares (micropropagação, criopreservação), o programa <em>Embrapa &amp; Escola</em> e participação em feiras regionais (ex. Agrobalsas).</p>
+      <div class="pc-grid">
+        <div class="pc-block"><span class="lbl">Reflexo na mudança</span>Esses eventos, se ignorados pelo plano de mudanças, continuarão reforçando apenas a narrativa técnica tradicional, sem espaço para comunicar avanços de gestão.</div>
+        <div class="pc-block"><span class="lbl">Ação recomendada</span>Incorporar marcos da gestão de mudanças ao calendário já consolidado da Unidade — por exemplo, anunciar conquistas do processo de mudança no próprio Dia de Portas Abertas, aproveitando um ritual já legitimado internamente.</div>
+      </div>
+    </div>
+
+    <div class="protocol-card c1">
+      <div class="pc-head"><span class="pc-code">Elemento 06 · Tabus</span><span class="cnpmf-tag">CNPMF</span></div>
+      <h4>Tabus</h4>
+      <div class="desc">Práticas e costumes inaceitáveis dentro da organização — alguns declarados em normas, outros tácitos.</div>
+      <p>O Focus registrou como tabu criticar abertamente a Chefia-Geral ou a Diretoria. Em uma unidade de porte médio e quadro estável como a CNPMF, esse tabu ganha uma camada adicional: questionar publicamente decisões de pesquisadores seniores associados ao legado histórico do melhoramento genético da mandioca e de fruticultura tropical tende a ser tão ou mais delicado que questionar a própria Chefia.</p>
+      <div class="pc-grid">
+        <div class="pc-block"><span class="lbl">Reflexo na mudança</span>Resistência de pesquisadores mais antigos tende a não aparecer em fóruns formais, manifestando-se apenas como "boicote velado" (ver mapa de stakeholders).</div>
+        <div class="pc-block"><span class="lbl">Ação recomendada</span>Criar canais de escuta confidencial e priorizar a comunicação extraordinária (abordagem corpo-a-corpo, conduzida pessoalmente pelo Gestor de Mudanças) com esse grupo específico.</div>
+      </div>
+    </div>
+
+    <div class="protocol-card c2">
+      <div class="pc-head"><span class="pc-code">Elemento 07 · Normas e formalidades</span><span class="cnpmf-tag">CNPMF</span></div>
+      <h4>Normas e formalidades</h4>
+      <div class="desc">Regras explícitas de conduta e comportamento de uma organização.</div>
+      <p>O Focus descreveu normas excessivas e por vezes desconectadas da realidade das Unidades como fonte de engessamento. Na CNPMF, porém, há um contraponto relevante: a Unidade opera com forte rigor formal em protocolos de biossegurança, quarentena vegetal e curadoria do banco de germoplasma — uma cultura de disciplina técnica já internalizada pelo corpo científico.</p>
+      <div class="pc-grid">
+        <div class="pc-block"><span class="lbl">Reflexo na mudança</span>Esse rigor pode ser um ativo: se o processo de gestão de mudanças for apresentado com o mesmo padrão de protocolo técnico já familiar à equipe, tende a ganhar mais adesão do que se tratado como "burocracia administrativa".</div>
+        <div class="pc-block"><span class="lbl">Ação recomendada</span>Formalizar o processo de gestão de mudanças como um "protocolo" institucional (com POPs e instruções de trabalho), dialogando deliberadamente com a cultura de rigor científico já existente na Unidade.</div>
+      </div>
+    </div>
+
+    <div class="protocol-card c3">
+      <div class="pc-head"><span class="pc-code">Elemento 08 · Heróis</span><span class="cnpmf-tag">CNPMF</span></div>
+      <h4>Heróis</h4>
+      <div class="desc">Personagens que marcaram a história da empresa — representam a cultura presente ou o passado idealizado.</div>
+      <p>O Focus identificou nomes como Alberto Duque Portugal e Eliseu Alves como referências corporativas de gestão. Na CNPMF, os "heróis" são majoritariamente pesquisadores fundadores associados ao melhoramento genético da mandioca e da fruticultura tropical baiana e ao estabelecimento do banco de germoplasma — figuras cujo legado técnico é constantemente invocado como argumento de autoridade.</p>
+      <div class="pc-grid">
+        <div class="pc-block"><span class="lbl">Reflexo na mudança</span>Iniciativas que pareçam desconsiderar esse legado tendem a gerar resistência emocional, mesmo quando tecnicamente justificadas.</div>
+        <div class="pc-block"><span class="lbl">Ação recomendada</span>Valorizar explicitamente o legado técnico no discurso de mudança, situando a nova gestão como continuidade e proteção desse patrimônio científico — nunca como ruptura com ele.</div>
+      </div>
+    </div>
+
+    <div class="protocol-card c4">
+      <div class="pc-head"><span class="pc-code">Elemento 09 · Atitude das lideranças</span><span class="cnpmf-tag">CNPMF</span></div>
+      <h4>Atitude das lideranças</h4>
+      <div class="desc">Comportamento estrito dos líderes — o que é feito, não o que é dito.</div>
+      <p>O Focus identificou, em toda a Embrapa, baixa tolerância a críticas e ausência de formação estruturada em liderança, já que cargos de chefia costumam ser ocupados por pesquisadores sem preparo formal em gestão. Na CNPMF, essa condição tende a se repetir de forma direta: chefias da Unidade normalmente ascendem por trajetória científica, não por formação em gestão de pessoas ou de mudanças.</p>
+      <div class="pc-grid">
+        <div class="pc-block"><span class="lbl">Reflexo na mudança</span>Dificuldade da Chefia-Geral e das Chefias-Adjuntas em patrocinar ativamente a mudança sem apoio metodológico específico — risco de discurso favorável sem prática consistente.</div>
+        <div class="pc-block"><span class="lbl">Ação recomendada</span>Capacitar formalmente o Comitê de Gestão da Unidade em HCMBoK e liderança de mudanças antes do kick-off de qualquer iniciativa, tal como recomendado no Plano de Treinamento (seção 11).</div>
+      </div>
+    </div>
+
+    <div class="protocol-card c5">
+      <div class="pc-head"><span class="pc-code">Elemento 10 · Práticas de gestão de pessoas</span><span class="cnpmf-tag">CNPMF</span></div>
+      <h4>Práticas de gestão de pessoas</h4>
+      <div class="desc">Como a empresa contrata, demite, promove, avalia, reconhece e remunera as pessoas, em sentido amplo.</div>
+      <p>O Focus apontou ausência de gestão estratégica de pessoas em toda a Embrapa, com avaliações de desempenho pouco conectadas à progressão salarial. Na CNPMF, esse cenário é agravado por um quadro relativamente estável e envelhecido, com baixa renovação via concurso nos últimos anos, e forte dependência operacional de estagiários e bolsistas para atividades de campo e laboratório.</p>
+      <div class="pc-grid">
+        <div class="pc-block"><span class="lbl">Reflexo na mudança</span>Risco de "boicote velado" por parte de servidores de carreira longa, pouco expostos a novas metodologias de portfólio e priorização; por outro lado, bolsistas e estagiários tendem a ser mais permeáveis a novas práticas.</div>
+        <div class="pc-block"><span class="lbl">Ação recomendada</span>Segmentar o Plano de Treinamento por tempo de casa e mapear, entre os colaboradores mais jovens, candidatos a <strong>Agentes de Mudança</strong> multiplicadores locais.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 IMPACTOS ORGANIZACIONAIS -->
+  <section id="s6">
+    <div class="sec-head">
+      <div class="sec-num">06</div>
+      <div><h2>Avaliação de impactos organizacionais</h2><div class="sub">Adaptação do template HCMBoK de Impactos Organizacionais para a CNPMF</div></div>
+    </div>
+    <p>Este artefato mapeia, para cada tipo de impacto previsto no padrão HCMBoK, sua severidade, o stakeholder mais afetado (cruzado com a seção 04) e a ação de mitigação correspondente.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Tipo de impacto</th><th class="center">Severidade</th><th>Stakeholder afetado</th><th>Plano de ação</th><th>Responsável</th></tr></thead>
+        <tbody>
+          <tr><td>Novas competências de gestão necessárias</td><td class="center"><span class="badge media">Média</span></td><td>Chefias-Adjuntas</td><td>Capacitação em gestão de portfólio, priorização (AHP) e HCMBoK</td><td>Gestor de Mudanças</td></tr>
+          <tr><td>Alterações no nível de autonomia das funções</td><td class="center"><span class="badge alta">Alta</span></td><td>Chefia-Geral / Coordenadores de Núcleo</td><td>Redefinir, com a SGI, governança local vs. corporativa (Integro)</td><td>Comitê de Gestão de Mudanças</td></tr>
+          <tr><td>Novas competências técnicas</td><td class="center"><span class="badge media">Média</span></td><td>Pesquisadores / Analistas</td><td>Trilhas em ferramentas digitais (Ater+ Mandioca, plataformas de priorização)</td><td>Núcleo de T&amp;D local (DGP)</td></tr>
+          <tr><td>Adequação de perfis funcionais</td><td class="center"><span class="badge baixa">Baixa</span></td><td>Técnicos e assistentes</td><td>Revisão de descrições de função à luz das novas atividades</td><td>RH local (SGP)</td></tr>
+          <tr><td>Fusões, concentrações ou segregações de atividades</td><td class="center"><span class="badge media">Média</span></td><td>Núcleos de mandioca × fruticultura</td><td>Redesenho de fluxo e comitês integrados de priorização entre linhas de pesquisa</td><td>Chefia-Adjunta de P&amp;D</td></tr>
+          <tr><td>Revisão de estruturas organizacionais</td><td class="center"><span class="badge alta">Alta</span></td><td>Toda a Unidade</td><td>Alinhamento do organograma local ao novo modelo corporativo de gestão por metas de impacto</td><td>Chefia-Geral</td></tr>
+          <tr><td>Integração entre áreas ou departamentos</td><td class="center"><span class="badge media">Média</span></td><td>P&amp;D / Transferência de Tecnologia / Administração</td><td>Comitês integrados e rituais periódicos de alinhamento</td><td>Gestor de Mudanças</td></tr>
+          <tr><td>Redução ou aumento do corpo funcional</td><td class="center"><span class="badge baixa">Baixa</span></td><td>Quadro técnico e de apoio</td><td>Plano de sucessão para aposentadorias previstas</td><td>DGP / SGI</td></tr>
+          <tr><td>Implicações em outros processos ou sistemas</td><td class="center"><span class="badge media">Média</span></td><td>Núcleo de Tecnologia da Informação (NTI)</td><td>Integração entre sistemas corporativos (SISGP) e plataformas próprias (Ater+ Mandioca)</td><td>NTI local</td></tr>
+          <tr><td>Ampliação do rigor com formalidades</td><td class="center"><span class="badge baixa">Baixa</span></td><td>Pesquisadores</td><td>Formalização de indicadores de metas de impacto sem burocratização excessiva</td><td>Comitê de Gestão de Mudanças</td></tr>
+          <tr><td>Mudanças comportamentais e culturais</td><td class="center"><span class="badge alta">Alta</span></td><td>Toda a Unidade</td><td>Plano de comunicação contínuo e T&amp;D (seções 10 e 11)</td><td>Gestor de Mudanças</td></tr>
+          <tr><td>Mudanças de status e estruturas de poder</td><td class="center"><span class="badge alta">Alta</span></td><td>Chefias e Coordenadores de Núcleo</td><td>Comunicação transparente dos critérios de decisão e dos novos papéis (RACI)</td><td>Chefia-Geral / SGI</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 07 PRONTIDÃO -->
+  <section id="s7">
+    <div class="sec-head">
+      <div class="sec-num">07</div>
+      <div><h2>Prontidão para a mudança</h2><div class="sub">Como o HCMBoK mede se a Unidade está pronta para implantar</div></div>
+    </div>
+    <p>Conforme descrito no Plano Estratégico do Projeto Focus, <strong>uma decisão precipitada de implantação que não considere os aspectos humanos da mudança pode levar todo o esforço a um fiasco</strong>. O HCMBoK trata a prontidão como um indicador a ser construído e monitorado — não um pressuposto — sustentado pela chamada <em>curva de comprometimento</em>.</p>
+    <div class="phase-rail" style="grid-template-columns:repeat(4,1fr);">
+      <div class="phase p1"><div><span class="pn">ETAPA 1</span><h5>Conhecimento</h5></div><ul><li>O stakeholder sabe que a mudança existe e o que ela representa</li></ul></div>
+      <div class="phase p2"><div><span class="pn">ETAPA 2</span><h5>Aceitação</h5></div><ul><li>Reconhece a legitimidade e a necessidade da mudança</li></ul></div>
+      <div class="phase p3"><div><span class="pn">ETAPA 3</span><h5>Entendimento</h5></div><ul><li>Compreende como a mudança afeta seu trabalho específico</li></ul></div>
+      <div class="phase p4"><div><span class="pn">ETAPA 4</span><h5>Comprometimento</h5></div><ul><li>Passa a agir ativamente a favor da mudança</li></ul></div>
+    </div>
+    <h3 class="h"><span class="chip">7.1</span>Instrumentos recomendados para a CNPMF</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Instrumento</th><th>Momento</th><th>Público</th><th>Objetivo</th></tr></thead>
+        <tbody>
+          <tr><td>Questionário de prontidão para a mudança</td><td>Antes do kick-off e periodicamente</td><td>Chefias, coordenadores, pesquisadores, técnicos</td><td>Identificar se a Unidade está preparada, permitindo ações de mitigação antecipadas</td></tr>
+          <tr><td>Pesquisa referente ao Período Pré-Produção</td><td>Antes da entrada em produção</td><td>Usuários diretos da mudança</td><td>Mensurar a evolução na curva de comprometimento</td></tr>
+          <tr><td>Pesquisa referente ao Período Pós-Produção</td><td>Após a sustentação iniciar</td><td>Usuários diretos e stakeholders externos (produtores, parceiros)</td><td>Confirmar consolidação da mudança e identificar ajustes</td></tr>
+          <tr><td>Painel de indicadores de prontidão</td><td>Contínuo</td><td>Comitê de Gestão de Mudanças</td><td>Tornar a decisão de implantação (GO/NO GO) mais racional e tangível</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <span class="k">Ponto de atenção específico da CNPMF</span>
+      Dada a distância física da Sede e a menor frequência de interações presenciais, os instrumentos de prontidão devem privilegiar formatos digitais (formulários on-line, EAD) e ser complementados por visitas presenciais programadas do Gestor de Mudanças — sem depender exclusivamente de reuniões por vídeo, dada a menor familiaridade histórica de parte do corpo técnico com ferramentas corporativas de gestão.
+    </div>
+  </section>
+
+  <!-- 08 RISCOS -->
+  <section id="s8">
+    <div class="sec-head">
+      <div class="sec-num">08</div>
+      <div><h2>Riscos da mudança</h2><div class="sub">Adaptação da Risk Breakdown Structure (RBS) e da matriz de probabilidade × impacto do Projeto Focus</div></div>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Risco</th><th class="center">Probabilidade</th><th class="center">Impacto</th><th>Resposta</th></tr></thead>
+        <tbody>
+          <tr><td>R01</td><td>Apoio institucional da Sede (SGI) insuficiente ou descontinuidade de patrocínio</td><td class="center"><span class="badge baixa">Baixa</span></td><td class="center"><span class="badge alta">Alto</span></td><td>Mitigar — reportes bimestrais ao patrocinador e manutenção de comitê consultivo</td></tr>
+          <tr><td>R02</td><td>Comprometimento dos núcleos técnicos abaixo do necessário</td><td class="center"><span class="badge media">Média</span></td><td class="center"><span class="badge alta">Alto</span></td><td>Mitigar — comunicado formal da Chefia-Geral reconhecendo prioridade do processo</td></tr>
+          <tr><td>R03</td><td>Indisponibilidade de candidatos a Agentes de Mudança (equipe reduzida)</td><td class="center"><span class="badge alta">Alta</span></td><td class="center"><span class="badge media">Médio</span></td><td>Mitigar — identificação via canais internos e apoio de gestores locais</td></tr>
+          <tr><td>R04</td><td>Restrição de recursos financeiros e cotas de viagem (custo de deslocamento à Sede)</td><td class="center"><span class="badge media">Média</span></td><td class="center"><span class="badge baixa">Baixo</span></td><td>Mitigar — priorizar formatos remotos (EAD, videoconferência) e viagens essenciais</td></tr>
+          <tr><td>R05</td><td>Insatisfação de produtores e parceiros com mudanças no atendimento (Ater+ Mandioca, TT)</td><td class="center"><span class="badge alta">Alta</span></td><td class="center"><span class="badge alta">Alto</span></td><td>Mitigar — execução conforme planejado, com interação constante com áreas de TT</td></tr>
+          <tr><td>R06</td><td>Mudanças realizadas sem a devida avaliação de gestão de mudanças</td><td class="center"><span class="badge media">Média</span></td><td class="center"><span class="badge baixa">Baixo</span></td><td>Evitar — consulta obrigatória ao Comitê antes de qualquer alteração de escopo</td></tr>
+          <tr><td>R07</td><td>Participação não efetiva dos núcleos (mandioca × fruticultura) no processo</td><td class="center"><span class="badge baixa">Baixa</span></td><td class="center"><span class="badge media">Médio</span></td><td>Mitigar — reconhecimento formal do engajamento e comunicação mensal de status</td></tr>
+          <tr><td>R08</td><td>Problemas de interface com outros sistemas corporativos (SISGP, Integro)</td><td class="center"><span class="badge media">Média</span></td><td class="center"><span class="badge media">Médio</span></td><td>Mitigar — comitê consultivo com responsáveis por sistemas corporativos</td></tr>
+          <tr><td>R09</td><td>Rejeição ao novo processo por apego ao modelo de gestão atual</td><td class="center"><span class="badge alta">Alta</span></td><td class="center"><span class="badge alta">Alto</span></td><td>Evitar — monitorar descontentamento via múltiplos canais e agir rapidamente</td></tr>
+          <tr><td>R10</td><td>Resistência de pesquisadores seniores ligados ao legado histórico da Unidade</td><td class="center"><span class="badge alta">Alta</span></td><td class="center"><span class="badge alta">Alto</span></td><td>Mitigar — comunicação extraordinária corpo-a-corpo e valorização explícita do legado</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="h"><span class="chip">8.1</span>Matriz de probabilidade × impacto</h3>
+    <div class="risk-matrix">
+      <div></div>
+      <div class="hd">Baixo</div><div class="hd">Médio</div><div class="hd">Alto</div>
+      <div class="axis-y">Probabilidade</div>
+      <div class="risk-cell r-mid"><span>R07</span></div><div class="risk-cell r-high"><span>R03</span></div><div class="risk-cell r-high"><span>R05</span><span>R09</span><span>R10</span></div>
+      <div class="risk-cell r-low"><span>R04</span><span>R06</span></div><div class="risk-cell r-mid"><span>R08</span></div><div class="risk-cell r-high"><span>R02</span></div>
+      <div class="risk-cell r-low"><span>R01</span></div><div class="risk-cell r-mid"></div><div class="risk-cell r-high"></div>
+      <div style="grid-column:2/5;" class="axis-x">Impacto</div>
+    </div>
+    <p style="margin-top:14px; font-size:.82rem; color:var(--ink-soft);">Linhas, de baixo para cima: probabilidade Baixa, Média, Alta. Células em vermelho concentram os riscos que exigem atenção prioritária do Comitê de Gestão de Mudanças: R05, R09 e R10 — todos ligados à aceitação da mudança pelos públicos técnico e externo, reforçando a centralidade da seção de Cultura Organizacional (05) neste dossiê.</p>
+  </section>
+
+  <!-- 09 RACI -->
+  <section id="s9">
+    <div class="sec-head">
+      <div class="sec-num">09</div>
+      <div><h2>Papéis e responsabilidades — Matriz RACI</h2><div class="sub">Adaptada da matriz RACI do Projeto Focus para o nível da Unidade</div></div>
+    </div>
+    <p>A Matriz RACI alinha expectativas entre a Unidade e a Sede, distinguindo quem <strong>executa (R)</strong>, quem <strong>responde pelo resultado (A)</strong>, quem deve ser <strong>consultado (C)</strong> e quem apenas precisa ser <strong>informado (I)</strong>. Contempla tanto a fase de execução da mudança quanto sua sustentação (Produção).</p>
+    <div class="legend-row">
+      <span class="legend-item"><span class="raci-chip raci-R">R</span> Responsável pela execução</span>
+      <span class="legend-item"><span class="raci-chip raci-A">A</span> Gestor do resultado (Accountable)</span>
+      <span class="legend-item"><span class="raci-chip raci-C">C</span> Consultado</span>
+      <span class="legend-item"><span class="raci-chip raci-I">I</span> Informado</span>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Resultado</th><th class="center">Chefia-Geral</th><th class="center">Chefia-Adj. P&amp;D</th><th class="center">Chefia-Adj. TT</th><th class="center">Gestor de Mudanças</th><th class="center">SGI / Sede</th><th class="center">Pesquisadores / Equipe</th></tr></thead>
+        <tbody>
+          <tr><td>Plano de comunicação</td><td class="center"><span class="raci-chip raci-A">A</span></td><td class="center"><span class="raci-chip raci-I">I</span></td><td class="center"><span class="raci-chip raci-C">C</span></td><td class="center"><span class="raci-chip raci-R">R</span></td><td class="center"><span class="raci-chip raci-I">I</span></td><td class="center"><span class="raci-chip raci-I">I</span></td></tr>
+          <tr><td>Plano de treinamento</td><td class="center"><span class="raci-chip raci-A">A</span></td><td class="center"><span class="raci-chip raci-C">C</span></td><td class="center"><span class="raci-chip raci-I">I</span></td><td class="center"><span class="raci-chip raci-R">R</span></td><td class="center"><span class="raci-chip raci-C">C</span></td><td class="center"><span class="raci-chip raci-I">I</span></td></tr>
+          <tr><td>Gestão da mudança (execução)</td><td class="center"><span class="raci-chip raci-A">A</span></td><td class="center"><span class="raci-chip raci-C">C</span></td><td class="center"><span class="raci-chip raci-C">C</span></td><td class="center"><span class="raci-chip raci-R">R</span></td><td class="center"><span class="raci-chip raci-I">I</span></td><td class="center"><span class="raci-chip raci-C">C</span></td></tr>
+          <tr><td>Governança e metas de impacto local</td><td class="center"><span class="raci-chip raci-A">A</span></td><td class="center"><span class="raci-chip raci-C">C</span></td><td class="center"><span class="raci-chip raci-C">C</span></td><td class="center"><span class="raci-chip raci-C">C</span></td><td class="center"><span class="raci-chip raci-I">I</span></td><td class="center"><span class="raci-chip raci-R">R</span></td></tr>
+          <tr><td>Integração com modelo corporativo (Integro)</td><td class="center"><span class="raci-chip raci-C">C</span></td><td class="center"><span class="raci-chip raci-C">C</span></td><td class="center"><span class="raci-chip raci-I">I</span></td><td class="center"><span class="raci-chip raci-C">C</span></td><td class="center"><span class="raci-chip raci-A">A</span></td><td class="center"><span class="raci-chip raci-I">I</span></td></tr>
+          <tr><td>Gestão do conhecimento (germoplasma, bases técnicas)</td><td class="center"><span class="raci-chip raci-I">I</span></td><td class="center"><span class="raci-chip raci-A">A</span></td><td class="center"><span class="raci-chip raci-C">C</span></td><td class="center"><span class="raci-chip raci-I">I</span></td><td class="center"><span class="raci-chip raci-I">I</span></td><td class="center"><span class="raci-chip raci-R">R</span></td></tr>
+          <tr><td>Avaliação de desempenho e prontidão</td><td class="center"><span class="raci-chip raci-A">A</span></td><td class="center"><span class="raci-chip raci-I">I</span></td><td class="center"><span class="raci-chip raci-I">I</span></td><td class="center"><span class="raci-chip raci-R">R</span></td><td class="center"><span class="raci-chip raci-C">C</span></td><td class="center"><span class="raci-chip raci-C">C</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 10 COMUNICAÇÃO -->
+  <section id="s10">
+    <div class="sec-head">
+      <div class="sec-num">10</div>
+      <div><h2>Plano de comunicação</h2><div class="sub">Comunicação ordinária e extraordinária adaptadas aos canais já existentes na CNPMF</div></div>
+    </div>
+    <h3 class="h"><span class="chip">10.1</span>Comunicação ordinária</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Comunicação</th><th>Canal</th><th>Frequência</th><th>Público-alvo</th></tr></thead>
+        <tbody>
+          <tr><td>Reunião com o Patrocinador (Chefia-Geral)</td><td>Presencial</td><td>Mensal</td><td>Gestor de Mudanças e Patrocinador</td></tr>
+          <tr><td>Reunião com Chefias-Adjuntas</td><td>Presencial</td><td>Quinzenal</td><td>Comitê de Gestão de Mudanças</td></tr>
+          <tr><td>Divulgação de status na intranet e Agropedia</td><td>Intranet / Agropedia</td><td>Semanal</td><td>Todo o corpo funcional da Unidade</td></tr>
+          <tr><td>Publicações no site e redes sociais da CNPMF</td><td>Site institucional / redes sociais</td><td>Bimestral</td><td>Parceiros, produtores e público externo</td></tr>
+          <tr><td>Atualizações via Ater+ Mandioca</td><td>Plataforma Ater+ Mandioca</td><td>Conforme marcos do projeto</td><td>Produtores rurais e extensionistas</td></tr>
+          <tr><td>Reunião do Comitê Assessor Externo (CAE)</td><td>Presencial / videoconferência</td><td>Semestral</td><td>Comitê Assessor Externo</td></tr>
+          <tr><td>Prestação de contas à SGI/Sede</td><td>SISGP / e-mail corporativo</td><td>Quadrimestral</td><td>SGI, Coordenação de Gestão de Mudanças corporativa</td></tr>
+          <tr><td>Divulgação de indicadores de prontidão</td><td>Todas as mídias disponíveis</td><td>Ao final de cada fase</td><td>100% dos colaboradores da Unidade</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3 class="h"><span class="chip">10.2</span>Comunicação extraordinária</h3>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Comunicação</th><th>Canal</th><th>Frequência</th><th>Público-alvo</th></tr></thead>
+        <tbody>
+          <tr><td>Kick-off da iniciativa de mudança</td><td>Presencial</td><td>Uma vez (início)</td><td>Toda a Unidade</td></tr>
+          <tr><td>Corpo-a-corpo com pesquisadores seniores e coordenadores de núcleo</td><td>Presencial</td><td>Contínua</td><td>Stakeholders com sinais de resistência (mapa de stakeholders)</td></tr>
+          <tr><td>Escuta confidencial (canal dedicado)</td><td>Presencial / formulário anônimo</td><td>Contínua</td><td>Todo o corpo técnico</td></tr>
+          <tr><td>Comunicação em eventos institucionais (Dia de Portas Abertas, feiras)</td><td>Presencial</td><td>Conforme calendário de eventos</td><td>Comunidade interna e externa</td></tr>
+          <tr><td>Celebração de conquistas e marcos da mudança</td><td>Presencial / redes sociais</td><td>A cada marco relevante</td><td>Toda a Unidade e parceiros</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 11 TREINAMENTO -->
+  <section id="s11">
+    <div class="sec-head">
+      <div class="sec-num">11</div>
+      <div><h2>Plano de treinamento &amp; desenvolvimento</h2><div class="sub">Baseado na ISO 10015, referência adotada no Projeto Focus</div></div>
+    </div>
+    <p>O plano de T&amp;D deve mapear competências a partir das necessidades identificadas na Avaliação de Impactos (seção 06), com objetivos, treinandos, métodos e critérios de avaliação — cobrindo satisfação do treinando, aquisição de conhecimento, desempenho no trabalho e impacto organizacional.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Treinamento</th><th>Participantes</th><th>Modalidade</th><th>Prioridade</th></tr></thead>
+        <tbody>
+          <tr><td>HCMBoK — fundamentos de Gestão de Mudanças</td><td>Comitê de Gestão de Mudanças e Chefias</td><td>Presencial</td><td><span class="badge alta">Alta</span></td></tr>
+          <tr><td>AHP — priorização participativa de portfólio</td><td>Coordenadores de núcleo (mandioca e fruticultura)</td><td>EAD</td><td><span class="badge alta">Alta</span></td></tr>
+          <tr><td>Liderança e gestão de pessoas para chefias técnicas</td><td>Chefia-Geral e Chefias-Adjuntas</td><td>Presencial</td><td><span class="badge alta">Alta</span></td></tr>
+          <tr><td>Gestão de portfólio de projetos de P&amp;D</td><td>Líderes de projeto</td><td>EAD</td><td><span class="badge media">Média</span></td></tr>
+          <tr><td>Ferramentas digitais corporativas (SISGP, Integro)</td><td>Todo o corpo técnico e administrativo</td><td>EAD</td><td><span class="badge media">Média</span></td></tr>
+          <tr><td>Formação de Agentes de Mudança</td><td>Bolsistas, estagiários e servidores mais recentes</td><td>Presencial + EAD</td><td><span class="badge alta">Alta</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3 class="h"><span class="chip">11.1</span>Perfil do Agente de Mudanças na CNPMF</h3>
+    <div class="protocol-card c3">
+      <div class="pc-head"><span class="pc-code">Ficha de função · Agente de Mudanças</span></div>
+      <p><strong>Descrição sumária:</strong> Informar, dialogar e comunicar os benefícios das mudanças na Unidade, incentivando o desenvolvimento dos núcleos e aprimorando a qualificação da equipe técnica para atuação no novo cenário de gestão por metas de impacto.</p>
+      <div class="pc-grid">
+        <div class="pc-block"><span class="lbl">Competências técnicas desejáveis</span>Conhecimento do negócio da CNPMF; gestão de processos e projetos; noções de gestão de mudanças (HCMBoK); familiaridade com plataformas digitais da Unidade (Ater+ Mandioca).</div>
+        <div class="pc-block"><span class="lbl">Competências comportamentais desejáveis</span>Comunicação, relacionamento interpessoal, trabalho em equipe entre núcleos, espírito de inovação e organização.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 CRONOGRAMA -->
+  <section id="s12">
+    <div class="sec-head">
+      <div class="sec-num">12</div>
+      <div><h2>Cronograma e ciclo de vida da mudança</h2><div class="sub">Macro-atividades por fase, adaptadas do Plano de Ação HCMBoK (padrão 5W2H)</div></div>
+    </div>
+    <p>O Plano de Ação do HCMBoK organiza as atividades em quatro níveis (Etapa → Macro Atividade → Produto Gerado → Atividade), com acompanhamento por "farol" (verde/amarelo/vermelho). Abaixo, as macro-atividades de cada fase, adaptadas ao contexto da CNPMF:</p>
+    <div class="two-col">
+      <div>
+        <h3 class="h" style="margin-top:8px;"><span class="chip" style="background:var(--forest)">Fase 1</span>Iniciação e Planejamento</h3>
+        <ul>
+          <li>Mapeamento do patrocinador (Chefia-Geral)</li>
+          <li>Definição de propósito, objetivo e identidade da mudança</li>
+          <li>Mapeamento e classificação de stakeholders (seção 04)</li>
+          <li>Avaliação da cultura organizacional (seção 05)</li>
+          <li>Definição de papéis e responsabilidades — RACI (seção 09)</li>
+          <li>Adequação do ambiente físico e tecnológico da Unidade</li>
+          <li>Planejamento da alocação e desenvolvimento da equipe</li>
+          <li>Avaliação da predisposição do clima para mudanças</li>
+          <li>Estabelecimento dos marcos da mudança</li>
+          <li>Planejamento do kick-off</li>
+        </ul>
+        <h3 class="h"><span class="chip" style="background:var(--teal)">Fase 2</span>Aquisição</h3>
+        <ul>
+          <li>Avaliação de riscos de choque cultural com parceiros/fornecedores</li>
+          <li>Definição de treinamento técnico adicional</li>
+          <li>Identificação de alternativas de gestão do conhecimento</li>
+          <li>Mapeamento de estilos de liderança de parceiros externos</li>
+          <li>Validação de papéis (RACI) com parceiros</li>
+          <li>Planejamento de integração de parceiros à cultura da Unidade</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="h" style="margin-top:8px;"><span class="chip" style="background:var(--gold); color:#2b2205">Fase 3</span>Execução</h3>
+        <ul>
+          <li>Realização do evento de kick-off</li>
+          <li>Avaliação de impactos organizacionais (seção 06)</li>
+          <li>Execução da gestão da aprendizagem</li>
+          <li>Confirmação do futuro da equipe no pós-projeto</li>
+          <li>Planejamento da desmobilização gradual da equipe</li>
+        </ul>
+        <h3 class="h"><span class="chip" style="background:var(--terracotta)">Fase 4</span>Implantação</h3>
+        <ul>
+          <li>Avaliação de prontidão e segurança dos usuários (seção 07)</li>
+          <li>Garantia de comprometimento das lideranças</li>
+          <li>Reunião de decisão de implantação (GO / NO GO)</li>
+          <li>Comunicação do resultado da decisão</li>
+        </ul>
+        <h3 class="h"><span class="chip" style="background:var(--plum)">Fase 5</span>Encerramento</h3>
+        <ul>
+          <li>Reconhecimento de desempenho da equipe</li>
+          <li>Registro de lições aprendidas</li>
+          <li>Preparação de usuários para treinar novos colaboradores</li>
+          <li>Celebração das conquistas e metas atingidas</li>
+        </ul>
+        <h3 class="h"><span class="chip" style="background:var(--forest-dark)">Fase 6</span>Produção (sustentação)</h3>
+        <ul>
+          <li>Sustentação contínua da mudança</li>
+          <li><em>Handover</em> da gestão de mudanças da Unidade para o CMO corporativo (SGI)</li>
+          <li>Comunicação e gestão participativa contínuas</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 PRODUTOS -->
+  <section id="s13">
+    <div class="sec-head">
+      <div class="sec-num">13</div>
+      <div><h2>Produtos gerados por fase</h2><div class="sub">Entregáveis consolidados da Gestão de Mudanças na CNPMF</div></div>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Fase</th><th>Produto</th></tr></thead>
+        <tbody>
+          <tr><td rowspan="3">Iniciação e Planejamento</td><td>Plano Estratégico de Gestão de Mudanças da Unidade</td></tr>
+          <tr><td>Mapa de Stakeholders e Avaliação de Cultura Organizacional</td></tr>
+          <tr><td>Cronograma de Gestão de Mudanças (Plano de Ação 5W2H)</td></tr>
+          <tr><td rowspan="6">Execução da Mudança</td><td>Indicadores de consolidação das mudanças definidos</td></tr>
+          <tr><td>Relatório da Gestão de Riscos</td></tr>
+          <tr><td>Plano e execução da comunicação e das capacitações</td></tr>
+          <tr><td>Mapa dos Agentes de Mudança (multiplicadores)</td></tr>
+          <tr><td>Relatório de Impactos Organizacionais e de Prontidão da Mudança</td></tr>
+          <tr><td>Estratégia de transição para sustentação junto à SGI (CMO)</td></tr>
+          <tr><td rowspan="4">Sustentação da Mudança</td><td>Pesquisa referente ao Período Pós-Produção</td></tr>
+          <tr><td>Medição e reporte contínuo dos indicadores de consolidação</td></tr>
+          <tr><td>Plano de melhoria contínua das mudanças implementadas</td></tr>
+          <tr><td>Estruturação e operação do Comitê Local de Gestão de Mudanças</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 14 RECOMENDAÇÕES -->
+  <section id="s14">
+    <div class="sec-head">
+      <div class="sec-num">14</div>
+      <div><h2>Recomendações finais</h2><div class="sub">Próximos passos para o Comitê de Gestão de Mudanças da CNPMF</div></div>
+    </div>
+    <div class="two-col">
+      <div class="protocol-card c1">
+        <div class="pc-head"><span class="pc-code">Recomendação 01</span></div>
+        <h4>Formalizar o patrocínio</h4>
+        <p style="margin-top:8px;">Garantir que a Chefia-Geral assuma publicamente o papel de patrocinador (perfil "Decisor / Vendedor"), condição indicada pelo próprio HCMBoK como ideal para o sucesso da mudança.</p>
+      </div>
+      <div class="protocol-card c2">
+        <div class="pc-head"><span class="pc-code">Recomendação 02</span></div>
+        <h4>Priorizar a cultura antes da estrutura</h4>
+        <p style="margin-top:8px;">Tratar os 10 elementos culturais da seção 05 como pré-requisito de diagnóstico antes de qualquer redesenho de estrutura organizacional ou de processos.</p>
+      </div>
+      <div class="protocol-card c3">
+        <div class="pc-head"><span class="pc-code">Recomendação 03</span></div>
+        <h4>Usar os canais já legitimados</h4>
+        <p style="margin-top:8px;">Comunicar a mudança pelos canais e rituais que a Unidade já reconhece como seus — Ater+ Mandioca, Dia de Portas Abertas, boletins técnicos — em vez de depender apenas de canais corporativos genéricos.</p>
+      </div>
+      <div class="protocol-card c4">
+        <div class="pc-head"><span class="pc-code">Recomendação 04</span></div>
+        <h4>Investir nos Agentes de Mudança</h4>
+        <p style="margin-top:8px;">Identificar multiplicadores entre bolsistas, estagiários e servidores mais recentes, historicamente mais permeáveis a novas metodologias, para sustentar a mudança no dia a dia da Unidade.</p>
+      </div>
+    </div>
+    <div class="callout green" style="margin-top:24px;">
+      <span class="k">Encerramento</span>
+      Este dossiê deve ser tratado como um documento vivo: os artefatos de stakeholders e cultura organizacional (seções 04 e 05) devem ser revisitados a cada nova fase do ciclo de vida HCMBoK, e o handover final para o Change Management Officer da SGI deve incluir avaliação formal do nível de maturidade de gestão de mudanças da própria CNPMF, tal como recomendado no Plano Estratégico do Projeto Focus.
+    </div>
+  </section>
+
+  <footer>
+    <strong>Dossiê de Gestão de Mudanças — Embrapa Mandioca e Fruticultura (CNPMF)</strong><br>
+    Metodologia: HCMBoK® (Human Change Management Body of Knowledge) · Referência corporativa: Plano Estratégico de Gestão de Mudanças, Projeto Focus, Embrapa Sede (2017)<br>
+    Documento consultivo elaborado para subsidiar o Comitê de Gestão de Mudanças da Unidade — uso interno.
+  </footer>
+
+</main>
+</div>
+</body>
+</html>
